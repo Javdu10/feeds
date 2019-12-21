@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class DraftsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +57,7 @@ class DraftsController extends Controller
 
         Draft::create($data);
 
-        return redirect('/drafts');
+        return redirect('drafts');
     }
 
     /**
@@ -89,7 +100,7 @@ class DraftsController extends Controller
         
         $draft->update($data);
 
-        return redirect('/drafts');
+        return redirect('drafts');
     }
 
     /**
