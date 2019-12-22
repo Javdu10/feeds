@@ -16,7 +16,7 @@ Auth::routes();
 // DRAFT CRUD
 Route::get('drafts', 'DraftsController@index');
 Route::get('/drafts/create', 'DraftsController@create'); // form insert
-Route::post('drafts', 'DraftsController@store'); // action insert
+//Route::post('drafts', 'DraftsController@store'); // action insert
 Route::get('/drafts/{draft}/edit', 'DraftsController@edit'); //form edit
 Route::patch('/drafts/{draft}', 'DraftsController@update'); //action edit
 Route::delete('/drafts/{draft}/delete', 'DraftsController@destroy'); // action delete

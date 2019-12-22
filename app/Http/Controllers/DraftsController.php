@@ -37,8 +37,8 @@ class DraftsController extends Controller
      */
     public function create()
     {
-        $draft = new Draft();
-        return view('drafts.create', compact('draft'));
+        $draft = Draft::create();
+        return view('drafts.edit', compact('draft'));
     }
 
     /**
@@ -49,11 +49,12 @@ class DraftsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'heading' => 'required',
-            'body' => 'required',
-        ]);
+        $data = [
+            'title' => request('title'),
+            'heading' => request('heading'),
+            'body' => request('body'),
+        ];
+
 
         Draft::create($data);
 
@@ -92,11 +93,11 @@ class DraftsController extends Controller
      */
     public function update(Request $request, Draft $draft)
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'heading' => 'required',
-            'body' => 'required',
-        ]);
+        $data = [
+            'title' => request('title'),
+            'heading' => request('heading'),
+            'body' => request('body'),
+        ];
         
         $draft->update($data);
 

@@ -275,11 +275,12 @@
     <script src="{{ asset('js/ckeditor5/ckeditor.js') }}" defer></script>
 
 <script>
+    if(document.querySelector( '.document-editor__editable' ))
     document.addEventListener("DOMContentLoaded", function(event) { 
         ClassicEditor
             .create( document.querySelector( '.document-editor__editable' ),{
                 autosave: {
-                    waitingTime: 3000,
+                    waitingTime: 2000,
                     save( editor ) {
                         return saveData( editor.getData() );
                     }
@@ -335,6 +336,8 @@
 
     function saveData( data ) {
         let form = document.querySelector( '#form-editor')
+        if(!form)
+            return
         let formdata = new FormData(form)
         formdata.set('body', editor.getData())
         return new Promise( (resolve, reject) => {
@@ -346,7 +349,7 @@
             })
         } );
     }
-    
+        
 </script>
 </body>
 </html>

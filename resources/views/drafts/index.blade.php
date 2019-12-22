@@ -13,7 +13,7 @@
         <tbody>
             @foreach ($drafts as $item)
                 <tr>
-                    <td>{{ $item->title }}</td>
+                    <td>{{ $item->title ?? 'A définir' }}</td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->updated_at }}</td>
                     <td><a href="/drafts/{{ $item->id }}/edit" class="btn btn-primary">Voir</a></td>

@@ -15,9 +15,9 @@ class CreateDraftsTable extends Migration
     {
         Schema::create('drafts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title');
-            $table->string('heading');
-            $table->longText('body');
+            $table->string('title')->nullable();
+            $table->string('heading')->nullable();
+            $table->longText('body')->nullable();
             $table->unsignedInteger('votes_for')->default(0);
             $table->unsignedInteger('votes_against')->default(0);
             $table->timestamps();
