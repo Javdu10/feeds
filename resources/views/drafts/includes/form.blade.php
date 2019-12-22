@@ -8,10 +8,20 @@
     <div class="document-editor">
         <div class="document-editor__toolbar"></div>
         <div class="document-editor__editable-container">
-            <div name="body" class="document-editor__editable">
+            <textarea name="body" class="document-editor__editable">
                 {{ old('body') ?? str_replace( '&', '&amp;', $draft->body ) }}
-            </div>
-            <div id="word-count"></div>
+            </textarea>
+            
         </div>
+    </div>
+    <div id="snippet-autosave-header">
+        <div id="snippet-autosave-status" class="">
+            <div id="snippet-autosave-status_label">Status:</div>
+            <div id="snippet-autosave-status_spinner">
+                <span id="snippet-autosave-status_spinner-label"></span>
+                <span id="snippet-autosave-status_spinner-loader"></span>
+            </div>
+        </div>
+        <div id="word-count"></div>
     </div>
 </div>

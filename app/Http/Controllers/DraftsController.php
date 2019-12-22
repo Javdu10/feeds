@@ -100,7 +100,7 @@ class DraftsController extends Controller
         
         $draft->update($data);
 
-        return redirect('drafts');
+        return 'Saved';
     }
 
     /**

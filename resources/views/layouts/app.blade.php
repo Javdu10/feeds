@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -149,7 +150,48 @@
             margin-left: calc( 2 * var(--ck-spacing-large) );
             margin-right: calc( 2 * var(--ck-spacing-large) );
         }
-        
+        #snippet-autosave-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--ck-color-toolbar-background);
+            border: 1px solid var(--ck-color-toolbar-border);
+            padding: 10px;
+            border-radius: var(--ck-border-radius);
+            margin-top: -0.5em;
+            margin-bottom: 1.5em;
+            border-top: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        #snippet-autosave-status.busy #snippet-autosave-status_spinner-label::after {
+            content: 'Sauvegarde en cours...';
+            color: red;
+        }
+        #snippet-autosave-status_spinner {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        #snippet-autosave-status_spinner-label::after {
+            content: 'Sauvegardé !';
+            color: green;
+            display: inline-block;
+            margin-right: var(--ck-spacing-medium);
+        }
+        #snippet-autosave-status_spinner-label {
+            position: relative;
+        }
+        #snippet-autosave-status_label {
+            font-weight: bold;
+            margin-right: var(--ck-spacing-medium);
+        }
+        #snippet-autosave-status, #snippet-autosave-server {
+            display: flex;
+            align-items: center;
+        }
+
     </style>
 </head>
 <body>
@@ -230,24 +272,81 @@
             </div>
         </main>
     </div>
-    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/decoupled-document/ckeditor.js"></script>
+    <script src="{{ asset('js/ckeditor5/ckeditor.js') }}" defer></script>
 
 <script>
-    DecoupledEditor
-        .create( document.querySelector( '.document-editor__editable' ))
-        .then( editor => {
-            // const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
-            // toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        ClassicEditor
+            .create( document.querySelector( '.document-editor__editable' ),{
+                autosave: {
+                    waitingTime: 3000,
+                    save( editor ) {
+                        return saveData( editor.getData() );
+                    }
+                },
+            })
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
 
-            // const wordCountPlugin = editor.plugins.get( 'WordCount' );
-            // const wordCountWrapper = document.getElementById( 'word-count' );
-            // wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+                const wordCountPlugin = editor.plugins.get( 'WordCount' );
+                const wordCountWrapper = document.getElementById( 'word-count' );
+                wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
 
-            window.editor = editor;
-        } )
-        .catch( error => {
-            console.error( error );
+                displayStatus( editor );
+                handleBeforeunload( editor );
+
+                window.editor = editor;
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    });
+        
+    function displayStatus( editor ) {
+        const pendingActions = editor.plugins.get( 'PendingActions' );
+        const statusIndicator = document.querySelector( '#snippet-autosave-status' );
+        const spinner =  document.querySelector( '#snippet-autosave-status_spinner-loader')
+
+        pendingActions.on( 'change:hasAny', ( evt, propertyName, newValue ) => {
+            if ( newValue ) {
+                statusIndicator.classList.add( 'busy' );
+                spinner.classList.add('text-danger')
+                spinner.classList.add('spinner-border')
+                
+            } else {
+                statusIndicator.classList.remove( 'busy' );
+                spinner.classList.remove('text-danger')
+                spinner.classList.remove( 'spinner-border' );
+                
+            }
         } );
+    }
+    
+    function handleBeforeunload( editor ) {
+        const pendingActions = editor.plugins.get( 'PendingActions' );
+
+        window.addEventListener( 'beforeunload', evt => {
+            if ( pendingActions.hasAny ) {
+                evt.preventDefault();
+            }
+        } );
+    }
+
+    function saveData( data ) {
+        let form = document.querySelector( '#form-editor')
+        let formdata = new FormData(form)
+        formdata.set('body', editor.getData())
+        return new Promise( (resolve, reject) => {
+            window.axios.post(`${form.action}`, formdata).then( () =>{
+                resolve();
+            }).catch( (error) =>{
+                console.log(error)
+                reject();
+            })
+        } );
+    }
+    
 </script>
 </body>
 </html>

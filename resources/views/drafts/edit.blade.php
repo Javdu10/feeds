@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="/drafts/{{$draft->id }}" method="post">
+    <form id="form-editor" action="/drafts/{{$draft->id }}" method="post">
         @method('PATCH')
         @include('drafts.includes.form')
         <button class ="btn btn-primary">Enregistrer</button>
