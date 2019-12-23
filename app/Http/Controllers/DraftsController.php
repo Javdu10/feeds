@@ -96,7 +96,7 @@ class DraftsController extends Controller
         $data = [
             'title' => request('title'),
             'heading' => request('heading'),
-            'body' => request('body'),
+            'body' => htmlentities(request('body')),
         ];
         
         $draft->update($data);

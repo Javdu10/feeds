@@ -191,7 +191,14 @@
             display: flex;
             align-items: center;
         }
-
+        .page-header {
+            padding-bottom: 9px;
+            border-bottom: 1px solid #eee;
+        }
+        .info {
+            margin-bottom: .5em;
+            color: #a0a0a0;
+        }
     </style>
 </head>
 <body>
@@ -266,9 +273,7 @@
 
         <main class="py-4">
             <div class="container">
-                <div class="row justify-content-center">
-                    @yield('content')
-                </div>
+                @yield('content')    
             </div>
         </main>
     </div>

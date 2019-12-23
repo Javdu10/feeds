@@ -14,7 +14,7 @@
                 <div class="document-editor__toolbar"></div>
                 <div class="document-editor__editable-container">
                     <textarea name="body" class="document-editor__editable">
-                        {{ old('body') ?? str_replace( '&', '&amp;', $draft->body ) }}
+                        {{ old('body') ?? html_entity_decode($draft->body ) }}
                     </textarea>
                     
                 </div>
