@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class Draft extends Model
 {
-    protected $fillable = array('title', 'heading', 'body');
+    protected $fillable = array('title', 'heading', 'body', 'owner_id');
 
     protected static function boot()
     {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDraftsTable extends Migration
+class Articles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateDraftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('drafts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->string('heading')->nullable();
             $table->longText('body')->nullable();
+            $table->unsignedInteger('votes_for')->default(0);
+            $table->unsignedInteger('votes_against')->default(0);
             $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +33,7 @@ class CreateDraftsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drafts');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('articles');
     }
 }

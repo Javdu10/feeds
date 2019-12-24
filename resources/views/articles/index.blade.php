@@ -12,18 +12,34 @@
         <div class="col-md-9">
             <section>
                 @foreach ($articles as $item)
+                    @php
+                        $votes_count = $item->votes_for + $item->votes_against;
+                        if($votes_count !== 0){
+                            $percent_for = number_format(($item->votes_for / $votes_count ) * 100, 2);
+                            $percent_against = number_format(($item->votes_against / $votes_count ) * 100, 2); 
+                        }else{
+                            $percent_for = 0;
+                            $percent_against = 0;
+                        }
+                                               
+                    @endphp
                     <article>
                         <h2>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <a href="/articles/test-test-test/">test test test</a>
+                                    <a href="/articles/{{ $item->id }}">{{ $item->title }}</a>
                                 </div>
                                 <div class="col-md-7" style="align-self: center;text-align: center;font-size: 0.5em;">
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">10%</div>           
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $percent_for }}%" aria-valuenow="{{ $percent_for }}" aria-valuemin="0" aria-valuemax="100">{{ $percent_for }}%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $percent_against }}%" aria-valuenow="{{$percent_against}}" aria-valuemin="0" aria-valuemax="100">{{$percent_against}}%</div>           
                                     </div>
-                                    1000 votes
+                                    {{ $votes_count }}
+                                    @if ($votes_count < 2 )
+                                        vote
+                                    @else
+                                        votes
+                                    @endif                                   
                                 </div>
                             </div>
                             
@@ -31,15 +47,12 @@
                         <div class="info">
                         <span class="date">
                             <span class="glyphicon glyphicon-calendar"></span>
-                            Dec. 21, 2019, 9:55 a.m.
+                            {{ $item->created_at }}
                         </span>
                         
                         </div>
                         <div class="content">
-                            
-                                <p><strong>test</strong>
-                    <em>afasffasdf</em></p>
-                            
+                            {{ $item->heading }}
                         </div>
                         
                         <div class="tags">

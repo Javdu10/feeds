@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session()->has('error-publish'))
+        <div class="alert alert-danger" role="alert">
+            {{ session()->get('error-publish')}}
+        </div>
+    @endif
     <form id="form-editor" action="/drafts/{{$draft->id }}" method="post">
         @method('PATCH')
         @csrf
@@ -30,11 +35,14 @@
                 <div id="word-count"></div>
             </div>
         </div>
-        <button class ="btn btn-primary">Enregistrer</button>
     </form>
     <form action="/drafts/{{$draft->id }}/delete" method="post">
         @csrf
         @method('DELETE')
-        <button class ="btn btn-primary">Supprimer</button>
+        <button class ="btn btn-danger">Supprimer</button>
+    </form>
+    <form action="/drafts/{{$draft->id }}/publish" method="post">
+        @csrf
+        <button class ="btn btn-warning">Publier</button>
     </form>
 @endsection

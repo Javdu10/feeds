@@ -281,10 +281,14 @@
 
 <script>
     if(document.querySelector( '.document-editor__editable' ))
-    document.addEventListener("DOMContentLoaded", function(event) { 
+    document.addEventListener("DOMContentLoaded", function(event) {
+        if(document.querySelector('[name="title"]')){ // save on blur title and heading
+            document.querySelector('[name="title"]').addEventListener("blur", throttle(saveData, 500))
+            document.querySelector('[name="heading"]').addEventListener("blur", throttle(saveData, 500))
+        }
         ClassicEditor
             .create( document.querySelector( '.document-editor__editable' ),{
-                autosave: {
+                autosave: window.location.pathname.startsWith('/articles/') ? {} : {
                     waitingTime: 2000,
                     save( editor ) {
                         return saveData( editor.getData() );
@@ -292,15 +296,21 @@
                 },
             })
             .then( editor => {
-                const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
-                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+                if(window.location.pathname.startsWith('/articles/')){
+                    editor.isReadOnly = true;
+                    document.querySelector('.ck-editor__top').style.visibility = "hidden";
+                    editor.config._config.autosave = {}
+                }else{
+                    const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
+                    toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+                    displayStatus( editor );
+                    handleBeforeunload( editor );
+                }             
 
                 const wordCountPlugin = editor.plugins.get( 'WordCount' );
                 const wordCountWrapper = document.getElementById( 'word-count' );
                 wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-
-                displayStatus( editor );
-                handleBeforeunload( editor );
+             
 
                 window.editor = editor;
             } )
@@ -354,6 +364,20 @@
             })
         } );
     }
+
+    function throttle (callback, limit) {
+        var wait = false;                  // Initially, we're not waiting
+        return function () {               // We return a throttled function
+            if (!wait) {                   // If we're not waiting
+                callback.call();           // Execute users function
+                wait = true;               // Prevent future invocations
+                setTimeout(function () {   // After a period of time
+                    wait = false;          // And allow future invocations
+                }, limit);
+            }
+        }
+    }
+    
         
 </script>
 </body>

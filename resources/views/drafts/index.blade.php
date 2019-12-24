@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session()->has('success-publish'))
+        <div class="alert alert-success" role="alert">
+            {{ session()->get('success-publish') }}
+        </div>
+    @endif
     <table class="table table-striped table-dark">
         <thead>
         <tr>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Draft;
+use App\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DraftsController extends Controller
 {
@@ -37,7 +39,7 @@ class DraftsController extends Controller
      */
     public function create()
     {
-        $draft = Draft::create();
+        $draft = Draft::create(['owner_id'=>Auth::id()]);
         return view('drafts.edit', compact('draft'));
     }
 
@@ -114,6 +116,28 @@ class DraftsController extends Controller
     {
         $draft->delete();
         return redirect('drafts');
+    }
+
+    /**
+     * Change Draft to Article.
+     *
+     * @param  \App\Draft  $draft
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Draft $draft)
+    {
+        if(empty($draft->title) || empty($draft->heading) )
+            return redirect('drafts/'.$draft->id.'/edit')->with('error-publish', "Il manque soit le titre soit la phrase d'accroche pour publier l'article.");
+           
+        $article = Article::create([
+            'title' =>$draft->title,
+            'heading' => $draft->heading,
+            'body' => $draft->body,
+            'owner_id' => $draft->owner_id
+        ]);
+        $draft->delete();
+        
+        return redirect('drafts')->with('success-publish', "l'article a été correctement publié");
     }
 
     
