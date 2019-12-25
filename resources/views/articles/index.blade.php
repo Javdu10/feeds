@@ -7,6 +7,16 @@
         </a>
         <a href="/drafts/" class="btn btn-secondary float-right" style="margin-right: .8em">Drafts</a>
         <h1>Articles</h1>
+        @if(session()->has('error-message'))
+            <div class="alert alert-danger" role="alert">
+                {{ session()->get('error-message')}}
+            </div>
+        @endif
+        @if(session()->has('success-message'))
+            <div class="alert alert-success" role="alert">
+                {{ session()->get('success-message')}}
+            </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-md-9">

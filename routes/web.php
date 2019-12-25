@@ -28,3 +28,5 @@ Route::get('/', 'ArticlesController@index')->name('index');
 Route::get('/articles/{article}', 'ArticlesController@show');
 Route::patch('/articles/{article}/like', 'ArticlesController@like')->middleware('auth');
 Route::patch('/articles/{article}/dislike', 'ArticlesController@dislike')->middleware('auth');
+Route::delete('/articles/{article}/delete', 'ArticlesController@destroy')->middleware('auth');
+Route::post('/articles/{article}/report', 'ArticlesController@report')->middleware('auth');
