@@ -18,6 +18,7 @@ class Articles extends Migration
             $table->string('title')->nullable();
             $table->string('heading')->nullable();
             $table->longText('body')->nullable();
+            $table->unsignedInteger('reports')->default(0);
             $table->unsignedInteger('votes_for')->default(0);
             $table->unsignedInteger('votes_against')->default(0);
             $table->unsignedBigInteger('owner_id');

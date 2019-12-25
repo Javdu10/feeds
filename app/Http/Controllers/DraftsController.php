@@ -27,7 +27,7 @@ class DraftsController extends Controller
      */
     public function index()
     {
-        $drafts = Draft::all();
+        $drafts = Auth::user()->drafts;
 
         return view('drafts.index', compact('drafts'));
     }
