@@ -28,4 +28,12 @@ class Draft extends Model
     {
         return 'string';
     }
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User','owner_id');
+    }
 }
