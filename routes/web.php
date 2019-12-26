@@ -24,7 +24,7 @@ Route::post('/drafts/{draft}/publish', 'DraftsController@publish');
 
 
 
-Route::get('/', 'ArticlesController@index')->name('index');
+Route::get('/', 'ArticlesController@index');
 Route::get('/articles/{article}', 'ArticlesController@show');
 Route::patch('/articles/{article}/like', 'ArticlesController@like')->middleware('auth');
 Route::patch('/articles/{article}/dislike', 'ArticlesController@dislike')->middleware('auth');

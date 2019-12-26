@@ -22,27 +22,6 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Article  $article
@@ -54,29 +33,6 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Article $article)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Article $article)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Article  $article
@@ -84,8 +40,8 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
-        if(Auth::id() !== $article->owner_id)
-            return view('articles.index')->with('error-message', 'Vous ne pouvez pas supprimer cet article.');
+        if(Auth::id() !== $article->user->id)
+            return redirect('/')->with('error-message', 'Vous ne pouvez pas supprimer cet article.');
 
         $article->delete();
         return redirect('/')->with('success-message', 'Article supprimé.');
@@ -99,7 +55,7 @@ class ArticlesController extends Controller
      */
     public function like(Article $article)
     {
-        if($article->owner_id === Auth::id())
+        if($article->user->id === Auth::id())
             return redirect('articles/'.$article->id)->with('error-action', "Vous ne pouvez pas voter pour vos articles !");
 
         $vote = Vote::firstOrNew(['user_id'=>Auth::id(), 'article_id'=>$article->id]);
@@ -127,7 +83,7 @@ class ArticlesController extends Controller
      */
     public function dislike(Article $article)
     {
-        if($article->owner_id === Auth::id())
+        if($article->user->id === Auth::id())
             return redirect('articles/'.$article->id)->with('error-action', "Vous ne pouvez pas voter pour vos articles !");
 
         $vote = Vote::firstOrNew(['user_id'=>Auth::id(), 'article_id'=>$article->id]);
@@ -155,7 +111,7 @@ class ArticlesController extends Controller
      */
     public function report(Article $article)
     {
-        if($article->owner_id === Auth::id())
+        if($article->user->id === Auth::id())
             return redirect('articles/'.$article->id)->with('error-action', "Vous ne pouvez pas signaler vos articles !");
 
         $report = Report::firstOrNew(['user_id'=>Auth::id(), 'article_id'=>$article->id]);
