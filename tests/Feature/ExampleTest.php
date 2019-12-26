@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
     use ForeignKeys;
     /**
      * A basic test example.
