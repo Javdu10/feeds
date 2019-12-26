@@ -44,37 +44,6 @@ class DraftsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $data = [
-            'title' => request('title'),
-            'heading' => request('heading'),
-            'body' => request('body'),
-        ];
-
-
-        Draft::create($data);
-
-        return redirect('drafts');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Draft  $draft
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Draft $draft)
-    {
-       //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Draft  $draft
