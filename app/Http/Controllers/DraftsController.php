@@ -104,10 +104,7 @@ class DraftsController extends Controller
             'body' => $draft->body,
             'owner_id' => $draft->owner_id
         ]);
-        $array_tag = "";
-        foreach ($draft->tags as $tag) {
-            $array_tag.=",$tag->name";
-        }
+        $array_tag = $draft->tagNames();
         $draft->delete();
         $article->tag($array_tag);
         $article->save();

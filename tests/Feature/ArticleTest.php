@@ -32,7 +32,7 @@ class ArticleTest extends TestCase
      *
      * @return void
      */
-    public function test_it_should_show_all_articles()
+    public function test_it_should_show_all_articles_if_not_logged()
     {
         $articles = factory(Article::class, 3)->create();
         $response = $this->get("/");
@@ -42,6 +42,26 @@ class ArticleTest extends TestCase
             $articles[1]->title,
             $articles[2]->title
         ]);
+    }
+
+    /**
+     * Create then show all articles.
+     *
+     * @return void
+     */
+    public function test_it_should_show_some_articles_if_logged()
+    {
+        $articles = factory(Article::class, 3)->create();
+        $articles[0]->tag('Gardening');
+        $articles[2]->tag('Gardening');
+        $articles[0]->save();
+        $articles[2]->save();
+
+        $user = factory(User::class)->create();
+        $user->tag('Gardening');
+        $this->ActingAs($user);
+        $response = $this->get("/");
+        $response->assertDontSeeText($articles[1]->title);
     }
 
     /**

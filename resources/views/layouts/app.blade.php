@@ -287,6 +287,7 @@
         if(document.querySelector('[name="title"]')){ // save on blur title and heading
             document.querySelector('[name="title"]').addEventListener("blur", throttle(saveData, 500))
             document.querySelector('[name="heading"]').addEventListener("blur", throttle(saveData, 500))
+            document.querySelector('[name="tags"]').addEventListener("blur", throttle(saveData, 500))
         }
         ClassicEditor
             .create( document.querySelector( '.document-editor__editable' ),{

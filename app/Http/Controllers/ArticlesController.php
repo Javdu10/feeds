@@ -17,7 +17,9 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        if(Auth::guest())
+            $articles = Article::all();
+        else $articles = Article::withAnyTag(Auth::user()->tagNames)->get();
         return view('articles.index', compact('articles'));
     }
 

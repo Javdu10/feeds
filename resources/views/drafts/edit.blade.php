@@ -12,16 +12,7 @@
         <div class="form-group">
         <input type="text" class="form-control" name="title" value="{{ old('title') ?? $draft->title }}">
         <input type="text" class="form-control" name="heading" value="{{ old('heading') ?? $draft->heading }}">
-        @php
-
-            $array_tag = "";
-            if(count($draft->tags) > 0){
-                foreach ($draft->tags as $tag) {
-                    $array_tag.=",$tag->name";
-                }
-            }
-        @endphp
-        <input type="text" class="form-control" data-role="tagsinput" name="tags" value="{{ old('tags') ?? $array_tag }}">
+        <input type="text" class="form-control" data-role="tagsinput" name="tags" value="{{ old('tags') ?? implode(',',$draft->tagNames()) }}">
             <div id="toolbar-container"></div>
 
             <!-- This container will become the editable. -->
