@@ -21,6 +21,12 @@
     <div class="row">
         <div class="col-md-9">
             <section>
+                
+                @if(count($articles) === 0)
+                <div class="alert alert-warning" role="alert">
+                    Pensez à modifier vos préférences <a class="btn btn-success" href="/users/{{ Auth::user()->id }}">en cliquant ici</a>
+                </div>
+                @endif
                 @foreach ($articles as $item)
                     @php
                         $votes_count = $item->votes_for + $item->votes_against;

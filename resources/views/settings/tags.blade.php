@@ -10,7 +10,7 @@
     @csrf
     @method('PATCH')
     <div class="form-group">
-        <input type="text" class="form-control" data-role="tagsinput" name="tags" value="{{ old('tags') ?? implode(',',$user->tagNames()) }}">
+        <input type="text" placeholder="Ex : Politique, Science" class="form-control" data-role="tagsinput" name="tags" value="{{ old('tags') ?? implode(',',$user->tagNames()) }}">
     </div>
     <button class ="btn btn-success">Enregister</button>
 </form>
