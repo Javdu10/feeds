@@ -16,7 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('js/tagsinput/tagsinput.css') }}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
@@ -278,8 +278,8 @@
         </main>
     </div>
     <script src="{{ asset('js/ckeditor5/ckeditor.js') }}" defer></script>
-
-<script>
+    <script src="{{ asset('js/tagsinput/tagsinput.js') }}" defer></script>
+    <script>
     if(document.querySelector( '.document-editor__editable' ))
     document.addEventListener("DOMContentLoaded", function(event) {
         if(document.querySelector('[name="title"]')){ // save on blur title and heading
