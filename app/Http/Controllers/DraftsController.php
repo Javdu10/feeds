@@ -84,7 +84,7 @@ class DraftsController extends Controller
     public function destroy(Draft $draft)
     {
         $draft->delete();
-        return redirect('drafts');
+        return redirect('drafts')->with('success-publish', "le brouillon a été correctement publié");
     }
 
     /**

@@ -30,3 +30,7 @@ Route::patch('/articles/{article}/like', 'ArticlesController@like')->middleware(
 Route::patch('/articles/{article}/dislike', 'ArticlesController@dislike')->middleware('auth');
 Route::delete('/articles/{article}/delete', 'ArticlesController@destroy')->middleware('auth');
 Route::post('/articles/{article}/report', 'ArticlesController@report')->middleware('auth');
+
+
+Route::get('/users/{user}', 'UserController@edit')->middleware('auth');
+Route::patch('/users/{user}', 'UserController@update')->middleware('auth');
