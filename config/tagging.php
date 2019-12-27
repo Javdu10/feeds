@@ -3,7 +3,7 @@
 return [
 	// Datatype for primary keys of your models.
 	// used in migrations only
-	'primary_keys_type' => 'integer', // 'string' or 'integer'
+	'primary_keys_type' => 'string', // 'string' or 'integer'
 		
 	// Value of are passed through this before save of tags
 	'normalizer' => '\Conner\Tagging\TaggingUtility::slug',

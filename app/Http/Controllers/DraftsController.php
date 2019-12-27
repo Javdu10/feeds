@@ -69,7 +69,7 @@ class DraftsController extends Controller
             'heading' => request('heading'),
             'body' => htmlentities(request('body')),
         ];
-        
+        $draft->retag(request('tags'));
         $draft->update($data);
 
         return 'Saved';
@@ -104,8 +104,13 @@ class DraftsController extends Controller
             'body' => $draft->body,
             'owner_id' => $draft->owner_id
         ]);
+        $array_tag = "";
+        foreach ($draft->tags as $tag) {
+            $array_tag.=",$tag->name";
+        }
         $draft->delete();
-        
+        $article->tag($array_tag);
+        $article->save();
         return redirect('drafts')->with('success-publish', "l'article a été correctement publié");
     }
 

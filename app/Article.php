@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    use \Conner\Tagging\Taggable;
     protected $fillable = array('title', 'heading', 'body','owner_id');
 
     /**

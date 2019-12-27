@@ -66,11 +66,9 @@
                         </div>
                         
                         <div class="tags">
-                            
-                            <a href="/articles/tag/Test/"><span class="label label-default">Test</span></a>
-                            
-                            <a href="/articles/tag/hello/"><span class="label label-default">hello</span></a>
-                            
+                            @foreach ($item->tags as $tag)
+                                <span class="badge badge-secondary">{{$tag->name}}</span>
+                            @endforeach
                         </div>
                         
                     </article>

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 class Draft extends Model
 {
+    use \Conner\Tagging\Taggable;
     protected $fillable = array('title', 'heading', 'body', 'owner_id');
 
     protected static function boot()
@@ -24,6 +25,9 @@ class Draft extends Model
         return false;
     }
 
+    /**
+    * @codeCoverageIgnore
+    */
     public function getKeyType()
     {
         return 'string';

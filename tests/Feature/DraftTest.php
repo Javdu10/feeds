@@ -78,13 +78,16 @@ class DraftTest extends TestCase
     {
         $draft = factory(Draft::class)->create();
         $user = $draft->user;
-
+        $draft->tag('Gardening');
         $this->ActingAs($user);
         $this->post("/drafts/$draft->id/publish");
 
         $this->assertDatabaseHas('articles', [
             'owner_id' => $user->id,
             'body' => $draft->body
+        ]);
+        $this->assertDatabaseHas('tagging_tagged', [
+            'tag_name' => 'Gardening',
         ]);
         $this->assertDeleted($draft);
     }
