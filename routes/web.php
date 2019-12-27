@@ -34,3 +34,5 @@ Route::post('/articles/{article}/report', 'ArticlesController@report')->middlewa
 
 Route::get('/users/{user}', 'UserController@edit')->middleware('auth');
 Route::patch('/users/{user}', 'UserController@update')->middleware('auth');
+
+Route::get('/faq','UserController@show');

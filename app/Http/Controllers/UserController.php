@@ -38,4 +38,8 @@ class UserController extends Controller
         $user->save();
         return redirect("/users/$user->id")->with('success-message', 'Préférences enregistrées');
     }
+
+    public function show(Request $request, User $user){
+        return view('faq');
+    }
 }
