@@ -31,6 +31,18 @@ class UserTest extends TestCase
      *
      * @return void
      */
+    public function test_it_should_see_faq()
+    {
+        $response = $this->get("/faq");
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
     public function test_it_should_not_see_profile()
     {
         $user = factory(User::class)->create();

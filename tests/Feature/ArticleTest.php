@@ -49,6 +49,25 @@ class ArticleTest extends TestCase
      *
      * @return void
      */
+    public function test_it_should_show_filter_articles_if_not_logged()
+    {
+        $articles = factory(Article::class, 3)->create();
+        $articles[1]->tag('Gardening');
+        $articles[1]->save();
+        $response = $this->get("/?tags[]=Gardening");
+        
+        $response->assertDontSeeText(htmlentities($articles[0]->title));
+        $response->assertSeeText(htmlentities($articles[1]->title));
+        $response->assertDontSeeText(htmlentities($articles[2]->title));
+        
+        
+    }
+
+    /**
+     * Create then show all articles.
+     *
+     * @return void
+     */
     public function test_it_should_show_some_articles_if_logged()
     {
         $articles = factory(Article::class, 3)->create();
