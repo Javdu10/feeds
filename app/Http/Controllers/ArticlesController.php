@@ -17,10 +17,26 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        if(Auth::guest())
-            $articles = Article::all();
-        else $articles = Article::withAnyTag(Auth::user()->tagNames)->get();
-        return view('articles.index', compact('articles'));
+        $getTags = request('tags', []);
+
+        if(sizeof($getTags) > 0){
+            $articles = Article::withAnyTag($getTags)->get();
+            if(Auth::guest())
+                $tags = Article::existingTags();
+            else $tags = Auth::user()->tags;
+
+        }else{
+
+            if(Auth::guest()){
+                $articles = Article::all();
+                $tags = Article::existingTags();
+            }else{
+                $articles = Article::withAnyTag(Auth::user()->tagNames())->get();
+                $tags = Auth::user()->tags;
+            }
+        }
+
+        return view('articles.index', compact('articles', 'tags'));
     }
 
     /**

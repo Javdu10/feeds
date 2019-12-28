@@ -38,9 +38,9 @@ class ArticleTest extends TestCase
         $response = $this->get("/");
 
         $response->assertSeeTextinOrder([
-            $articles[0]->title,
-            $articles[1]->title,
-            $articles[2]->title
+            htmlentities($articles[0]->title),
+            htmlentities($articles[1]->title),
+            htmlentities($articles[2]->title)
         ]);
     }
 

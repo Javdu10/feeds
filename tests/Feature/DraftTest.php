@@ -146,8 +146,8 @@ class DraftTest extends TestCase
         $response = $this->get("/drafts");
 
         $response->assertSeeTextInOrder([
-            $drafts[0]->title,
-            $drafts[1]->title
+            htmlentities($drafts[0]->title),
+            htmlentities($drafts[1]->title)
             
         ]);
     }

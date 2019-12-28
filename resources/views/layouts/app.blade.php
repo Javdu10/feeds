@@ -20,6 +20,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+        .tag{
+            padding-left:5px!important;
+            margin: 1px;
+        }
         .document-editor {
             border: 1px solid var(--ck-color-base-border);
             border-radius: var(--ck-border-radius);

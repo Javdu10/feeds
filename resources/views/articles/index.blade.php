@@ -82,15 +82,22 @@
             </section>
         </div>
         <div class="col-md-3">
-            <form class="form-inline my-2 my-lg-0">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+            <form action="/" method="GET" class="form-inline my-2 my-lg-0">
+                <div class="row" style="justify-content:center">
+                    <div class="col-12">
+                        <button style="width:100%" type="submit" class="btn btn-success">Filtrer</button>
                     </div>
-                  </div>
-              </form>
-              Tags
+                    @foreach ($tags as $tag)
+                    <div class="form-check badge badge-secondary tag">
+                        <input class="form-check-input" name="tags[]" type="checkbox" id="{{$tag->name}}" value="{{$tag->name}}">
+                        <label class="form-check-label" for="{{$tag->name}}">{{$tag->name}}</label>
+                    </div>
+                @endforeach
+                </div>
+                
+                
+            </form>
+            
         </div>
     </div>
    
