@@ -7,6 +7,7 @@ use App\Report;
 use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Caxy\HtmlDiff\HtmlDiff;
 
 class ArticlesController extends Controller
 {
@@ -47,7 +48,13 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles.show', compact('article'));
+        $oldHtml = '<h2>ertertert</h2><p>rtrt</p><p><strong>rtgfgfgfg</strong></p><p>&nbsp;</p><figure class="table"><table><tbody><tr><td>fdf</td><td>ff</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>hh</td><td>hh</td></tr><tr><td>&nbsp;</td><td>dd</td><td>dd</td></tr></tbody></table></figure>';
+        $newHtml = '<h2>ertertert</h2><p>rtrt</p><p><strong>rtgfgfhhhgfg</strong></p><p>&nbsp;</p><figure class="table"><table><tbody><tr><td>fdf</td><td><h3>ff</h3></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><strong>hh</strong></td><td>hh</td></tr><tr><td>&nbsp;</td><td>tt</td><td>dd</td></tr></tbody></table></figure>';
+        $htmlDiff = new HtmlDiff($oldHtml, $newHtml);
+        $content = $htmlDiff->build();
+        $del = preg_replace('/(?=<del class="diffmod">)(.*)(?<=<\/del>)/',' ', $content);
+        $ins = preg_replace('/(?=<ins class="diffmod">)(.*)(?<=<\/ins>)/',' ', $content);
+        return view('articles.show', compact('article', 'content', 'del', 'ins'));
     }
 
     /**

@@ -168,6 +168,16 @@
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
+        ins {
+            text-decoration: none;
+            background-color: #d4fcbc;
+        }
+
+        del {
+            text-decoration: line-through;
+            background-color: #fbb6c2;
+            color: #555;
+        }
 
         #snippet-autosave-status.busy #snippet-autosave-status_spinner-label::after {
             content: 'Sauvegarde en cours...';
@@ -286,6 +296,7 @@
     <script src="{{ asset('js/ckeditor5/ckeditor.js') }}" defer></script>
     <script src="{{ asset('js/tagsinput/tagsinput.js') }}" defer></script>
     <script>
+        window.diffTag = 'ins'
     if(document.querySelector( '.document-editor__editable' ))
     document.addEventListener("DOMContentLoaded", function(event) {
         if(document.querySelector('[name="title"]')){ // save on blur title and heading

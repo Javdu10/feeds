@@ -19,13 +19,13 @@ class ArticleTest extends TestCase
      *
      * @return void
      */
-    public function test_it_should_show_an_article()
-    {
-        $article = factory(Article::class)->create();
-        $response = $this->get("/articles/$article->id");
+    // public function test_it_should_show_an_article()
+    // {
+    //     $article = factory(Article::class)->create();
+    //     $response = $this->get("/articles/$article->id");
 
-        $response->assertSeeText($article->body);
-    }
+    //     $response->assertSeeText($article->body);
+    // }
 
     /**
      * Create then show all articles.

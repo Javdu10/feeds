@@ -11,18 +11,21 @@
             {{ session()->get('error-action')}}
         </div>
     @endif
+    @php
+        echo $ins;
+    @endphp
     <div class="document-editor">
         <div class="document-editor__editable-container">
             <textarea name="body" class="document-editor__editable">
-                {{ html_entity_decode($article->body ) }}
+                {{ html_entity_decode($del ) }}
             </textarea>
         </div>
     </div>
     <div id="snippet-autosave-header">
         <div id="word-count"></div>
     </div>
-
     
+
     @if(Auth::id() === $article->owner_id)
         <button data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger">Supprimer</button>
         <div class="modal fade" id="confirm-delete" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
